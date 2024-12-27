@@ -8,10 +8,7 @@
 void coolresload(const char* resName, unsigned char** data, DWORD* size) {
     HMODULE hModule = GetModuleHandle(NULL);
     HRSRC hResource = FindResource(hModule, resName, RT_RCDATA);
-    if (!hResource) {
-        printf("Resource %s not found!\n", resName);
-        exit(1);
-    }
+    
 
     HGLOBAL hResData = LoadResource(hModule, hResource);
     *size = SizeofResource(hModule, hResource);
