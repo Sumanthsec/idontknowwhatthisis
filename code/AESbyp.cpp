@@ -50,7 +50,7 @@ int main() {
     coolresload("AESCODE", &AESCode, &AESCodeLen);  // Load AES shellcode
 
     // Print the AES key and shellcode for debugging (as hex)
-     unsigned char keyy[AESkeyLen];
+     unsigned char keykum[AESkeyLen];
     unsigned char codee[AESCodeLen];
 
     // Copy the data into the arrays
